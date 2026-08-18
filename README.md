@@ -1,4 +1,4 @@
-# Copilot for Playwright — AI QA Console
+# Copilot for Playwright — AI QA Console portal
 
 An AI-powered console for Playwright automation testers, built around the tasks QA engineers actually lose time on: converting requirements into tests, scaling spreadsheet-based test packs, reusing automation logic, healing broken locators, and diagnosing failures.
 
