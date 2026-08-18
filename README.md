@@ -1257,5 +1257,6 @@ Self-Healing
 ```
 
 **One console. One workflow. From requirement to executable Playwright automation.**
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/43c855b0-699d-46b1-af5d-bd11a333bbc2" />
 
 
