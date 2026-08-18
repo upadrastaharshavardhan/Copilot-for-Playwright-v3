@@ -1,0 +1,80 @@
+[
+  {
+    "id": "builtin-generic",
+    "name": "Generic Data-Driven",
+    "description": "Safe fallback used for any module that has no more specific template. Lists available data as TODOs.",
+    "category": "generic",
+    "keywords": [],
+    "builtin": true,
+    "pythonSteps": null,
+    "typescriptSteps": null
+  },
+  {
+    "id": "builtin-login",
+    "name": "Login Flow",
+    "description": "Fills a username/password form and checks the expected outcome text.",
+    "category": "login",
+    "keywords": [
+      "login",
+      "signin",
+      "sign-in",
+      "sign in",
+      "auth",
+      "authentication",
+      "logon"
+    ],
+    "builtin": true,
+    "pythonSteps": "page.goto(BASE_URL + \"/login\")\npage.get_by_label(\"Username\").fill(str({{data.username}}))\npage.get_by_label(\"Password\").fill(str({{data.password}}))\npage.get_by_role(\"button\", name=\"Log in\").click()\nexpect(page.get_by_text(str({{expected}}))).to_be_visible()",
+    "typescriptSteps": "await page.goto(BASE_URL + '/login');\nawait page.getByLabel('Username').fill(String({{data.username}}));\nawait page.getByLabel('Password').fill(String({{data.password}}));\nawait page.getByRole('button', { name: 'Log in' }).click();\nawait expect(page.getByText(String({{expected}}))).toBeVisible();"
+  },
+  {
+    "id": "builtin-form",
+    "name": "Form Submission",
+    "description": "Fills a generic multi-field form from the data row and submits it.",
+    "category": "form",
+    "keywords": [
+      "form",
+      "checkout",
+      "register",
+      "signup",
+      "sign up",
+      "onboarding",
+      "application"
+    ],
+    "builtin": true,
+    "pythonSteps": "page.goto(BASE_URL + \"/form\")\nfor field_name, field_value in case[\"data\"].items():\n    page.get_by_label(field_name).fill(str(field_value))\npage.get_by_role(\"button\", name=\"Submit\").click()\nexpect(page.get_by_text(str({{expected}}))).to_be_visible()",
+    "typescriptSteps": "await page.goto(BASE_URL + '/form');\nfor (const [fieldName, fieldValue] of Object.entries(c.data)) {\n  await page.getByLabel(fieldName).fill(String(fieldValue));\n}\nawait page.getByRole('button', { name: 'Submit' }).click();\nawait expect(page.getByText(String({{expected}}))).toBeVisible();"
+  },
+  {
+    "id": "builtin-search",
+    "name": "Search & Filter",
+    "description": "Types a search term and asserts on the results/empty state.",
+    "category": "search",
+    "keywords": [
+      "search",
+      "filter",
+      "query",
+      "lookup"
+    ],
+    "builtin": true,
+    "pythonSteps": "page.goto(BASE_URL + \"/search\")\npage.get_by_placeholder(\"Search\").fill(str({{data.query}}))\npage.keyboard.press(\"Enter\")\nexpect(page.get_by_text(str({{expected}}))).to_be_visible()",
+    "typescriptSteps": "await page.goto(BASE_URL + '/search');\nawait page.getByPlaceholder('Search').fill(String({{data.query}}));\nawait page.keyboard.press('Enter');\nawait expect(page.getByText(String({{expected}}))).toBeVisible();"
+  },
+  {
+    "id": "builtin-api",
+    "name": "REST API Validation",
+    "description": "Calls a REST endpoint directly (no browser) and asserts on the response — for API/service modules.",
+    "category": "api",
+    "keywords": [
+      "api",
+      "service",
+      "endpoint",
+      "rest",
+      "backend",
+      "microservice"
+    ],
+    "builtin": true,
+    "pythonSteps": "import requests\nresp = requests.request(\n    method=str(case[\"data\"].get(\"method\", \"GET\")),\n    url=BASE_URL + str(case[\"data\"].get(\"path\", \"/\")),\n    json=case[\"data\"].get(\"body\"),\n    timeout=15,\n)\nassert resp.status_code == int(case[\"data\"].get(\"expected_status\", 200))\nassert str({{expected}}) == \"\" or str({{expected}}) in resp.text",
+    "typescriptSteps": "const method = String(c.data.method ?? 'GET');\nconst resp = await page.request.fetch(BASE_URL + String(c.data.path ?? '/'), {\n  method,\n  data: c.data.body,\n});\nexpect(resp.status()).toBe(Number(c.data.expected_status ?? 200));\nconst body = await resp.text();\nif (String({{expected}})) expect(body).toContain(String({{expected}}));"
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "runId": "0a5b2d42a6638157",
+    "createdAt": "2026-08-18T06:40:00.845Z",
+    "sourceLabel": "test_pack_10000_cases.xlsx",
+    "language": "python",
+    "totalCases": 10000,
+    "modules": 20,
+    "generationTimeMs": 254,
+    "warnings": []
+  }
+]
